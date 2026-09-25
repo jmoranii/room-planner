@@ -1,0 +1,134 @@
+{
+  "id": "two-zones",
+  "name": "Two zones: read and meditate",
+  "room": "basement",
+  "notes": "Each side of the beam gets its own job. The closet side is for reading: the doors come off and the closet becomes a cushioned nook with string lights, with a rug and a lamp in front. The window side is for meditation: a zafu on a round rug facing the window light, under a paper lantern, with a low shelf on the AC wall. One thing to check in person: the AC unit blows across the meditation spot.",
+  "mood": "day",
+  "options": {
+    "closetDoors": false
+  },
+  "eye": {
+    "x": 50,
+    "y": 112,
+    "yaw": 270,
+    "pitch": -2
+  },
+  "items": [
+    {
+      "id": "closetCushion-1",
+      "type": "closetCushion",
+      "x": 198,
+      "y": 43,
+      "color": "#6f7f8f",
+      "rot": 0
+    },
+    {
+      "id": "pillow-1",
+      "type": "pillow",
+      "x": 208,
+      "y": 30,
+      "rot": 90,
+      "z": 4
+    },
+    {
+      "id": "pillow-2",
+      "type": "pillow",
+      "x": 208,
+      "y": 56,
+      "rot": 90,
+      "z": 4,
+      "color": "#c9a66b"
+    },
+    {
+      "id": "stringLights-1",
+      "type": "stringLights",
+      "x": 186,
+      "y": 43,
+      "rot": 90,
+      "w": 60,
+      "z": 77
+    },
+    {
+      "id": "rugRunner-1",
+      "type": "rugRunner",
+      "x": 160,
+      "y": 45,
+      "rot": 90
+    },
+    {
+      "id": "floorLamp-1",
+      "type": "floorLamp",
+      "x": 166,
+      "y": 8,
+      "rot": 0
+    },
+    {
+      "id": "lowShelf-2",
+      "type": "lowShelf",
+      "x": 118,
+      "y": 7,
+      "rot": 0
+    },
+    {
+      "id": "rugRound-1",
+      "type": "rugRound",
+      "x": 50,
+      "y": 100,
+      "color": "#b9a58f",
+      "rot": 0
+    },
+    {
+      "id": "zabuton-1",
+      "type": "zabuton",
+      "x": 50,
+      "y": 102,
+      "rot": 0
+    },
+    {
+      "id": "zafu-1",
+      "type": "zafu",
+      "x": 50,
+      "y": 106,
+      "z": 3,
+      "rot": 0
+    },
+    {
+      "id": "lantern-1",
+      "type": "lantern",
+      "x": 50,
+      "y": 98,
+      "z": 58,
+      "rot": 0
+    },
+    {
+      "id": "lowShelf-1",
+      "type": "lowShelf",
+      "x": 7,
+      "y": 100,
+      "rot": 270
+    },
+    {
+      "id": "candles-1",
+      "type": "candles",
+      "x": 7,
+      "y": 92,
+      "z": 30,
+      "rot": 0
+    },
+    {
+      "id": "plantSmall-1",
+      "type": "plantSmall",
+      "x": 7,
+      "y": 110,
+      "z": 30,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 72,
+      "y": 14,
+      "rot": 0
+    }
+  ]
+}

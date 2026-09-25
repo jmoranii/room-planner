@@ -32,6 +32,10 @@
         <button type="button" data-view="top">Top</button>
         <button type="button" data-view="eye">Eye level</button>
       </div>
+      <div class="seg" role="group" aria-label="Lighting">
+        <button type="button" data-mood="day" class="on">Day</button>
+        <button type="button" data-mood="evening">Evening</button>
+      </div>
       <div class="seg" id="eyeHeight" role="group" aria-label="Eye height" hidden>
         <button type="button" data-h="32" class="on">Seated</button>
         <button type="button" data-h="62">Standing</button>
@@ -53,6 +57,25 @@
         <li><i class="k-beam"></i>Beam overhead</li>
       </ul>
       <p class="notes" id="notes"></p>
+      <p class="draft" id="draftNote" hidden>You've changed this version. Changes are kept on this device only. <button type="button" class="link" id="resetDraft">Reset to saved</button></p>
+
+      <h2>Selected piece</h2>
+      <div id="inspector" class="inspector"></div>
+
+      <h2>Checks</h2>
+      <ul id="warnings" class="warnings"></ul>
+
+      <h2>Add pieces</h2>
+      <div id="palette" class="palette"></div>
+
+      <h2>Room options</h2>
+      <label class="check"><input type="checkbox" id="closetDoors" checked> Closet bifold doors on</label>
+
+      <div class="row actions share">
+        <button type="button" class="btn" id="copyLayout">Copy layout</button>
+      </div>
+      <p class="muted tiny">Copy layout puts this arrangement on the clipboard, so it can be saved as a new version in the menu.</p>
+
       <details class="measure">
         <summary>Measurements</summary>
         <dl id="measurements"></dl>
@@ -60,6 +83,7 @@
     </section>
   </main>
 
+  <div class="toast" id="toast" role="status" hidden></div>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>

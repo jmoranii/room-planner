@@ -1,3 +1,27 @@
 [
-  { "id": "empty", "name": "Empty room (Sep 2026)", "file": "empty.json" }
+  {
+    "id": "empty",
+    "name": "Empty room (Sep 2026)",
+    "file": "empty.json"
+  },
+  {
+    "id": "closet-nook",
+    "name": "Idea: closet reading nook",
+    "file": "closet-nook.json"
+  },
+  {
+    "id": "zen",
+    "name": "Idea: zen meditation room",
+    "file": "zen.json"
+  },
+  {
+    "id": "floor-lounge",
+    "name": "Idea: cozy floor lounge",
+    "file": "floor-lounge.json"
+  },
+  {
+    "id": "two-zones",
+    "name": "Idea: two zones, read + meditate",
+    "file": "two-zones.json"
+  }
 ]

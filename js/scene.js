@@ -93,7 +93,7 @@ function wallMaterials(shared) {
     wall: new THREE.MeshLambertMaterial({ color: COLOR.wall }),
     trim: new THREE.MeshLambertMaterial({ color: COLOR.trim }),
     unit: new THREE.MeshLambertMaterial({ color: COLOR.unit }),
-    glass: new THREE.MeshBasicMaterial({ color: COLOR.glass }),
+    glass: new THREE.MeshBasicMaterial({ color: COLOR.glass, userData: { glass: true } }),
     metal: new THREE.MeshLambertMaterial({ color: COLOR.metal, side: THREE.DoubleSide }),
     gravel: new THREE.MeshLambertMaterial({ color: COLOR.gravel }),
     louver: new THREE.MeshLambertMaterial({ map: shared.louver }),
@@ -182,7 +182,7 @@ function wallItem(seg, it, g, m) {
   }
 }
 
-export function buildRoom(room) {
+export function buildRoom(room, opts = {}) {
   const root = new THREE.Group();
   const segs = segments(room);
   const H = room.ceiling;
@@ -202,7 +202,7 @@ export function buildRoom(room) {
     for (const o of seg.openings) {
       casing(seg, o, g, m);
       if (o.type === 'window') windowUnit(seg, o, g, m);
-      if (o.type === 'closet') { bifold(seg, o, g, m); closetBox(room, g, m); }
+      if (o.type === 'closet') { if (opts.closetDoors !== false) bifold(seg, o, g, m); closetBox(room, g, m); }
     }
     if (room.egressWell?.wall === i) egressWell(room, segs, g, m);
     for (const it of room.wallItems.filter(w => w.wall === i)) wallItem(seg, it, g, m);

@@ -1,0 +1,147 @@
+{
+  "id": "closet-nook",
+  "name": "Closet reading nook",
+  "room": "basement",
+  "notes": "Take the bifold doors off and the 76 \u00d7 29\u00bd in closet becomes a daybed-style reading nook: a cushion cut to fit, pillows against the back wall, string lights along the header and a ledge for the current stack of books. A rug and floor cushions in front make room for a second person. The cushion sits over the floor drain cover, so it has to lift out.",
+  "mood": "evening",
+  "options": {
+    "closetDoors": false
+  },
+  "eye": {
+    "x": 140,
+    "y": 52,
+    "yaw": -8,
+    "pitch": -4
+  },
+  "items": [
+    {
+      "id": "closetCushion-1",
+      "type": "closetCushion",
+      "x": 198,
+      "y": 43,
+      "rot": 0
+    },
+    {
+      "id": "pillow-1",
+      "type": "pillow",
+      "x": 208,
+      "y": 24,
+      "rot": 90,
+      "z": 4,
+      "color": "#c9a66b"
+    },
+    {
+      "id": "pillow-2",
+      "type": "pillow",
+      "x": 208,
+      "y": 43,
+      "rot": 90,
+      "z": 4,
+      "color": "#b86b4b"
+    },
+    {
+      "id": "pillow-3",
+      "type": "pillow",
+      "x": 208,
+      "y": 62,
+      "rot": 90,
+      "z": 4,
+      "color": "#e0c9a6"
+    },
+    {
+      "id": "bolster-1",
+      "type": "bolster",
+      "x": 197,
+      "y": 11,
+      "z": 4,
+      "rot": 0
+    },
+    {
+      "id": "ledge-1",
+      "type": "ledge",
+      "x": 210,
+      "y": 43,
+      "rot": 90,
+      "z": 50
+    },
+    {
+      "id": "stringLights-1",
+      "type": "stringLights",
+      "x": 186,
+      "y": 43,
+      "rot": 90,
+      "w": 60,
+      "z": 77
+    },
+    {
+      "id": "curtain-1",
+      "type": "curtain",
+      "x": 176,
+      "y": 18,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "curtain-2",
+      "type": "curtain",
+      "x": 176,
+      "y": 68,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "rug46-1",
+      "type": "rug46",
+      "x": 148,
+      "y": 45,
+      "rot": 90
+    },
+    {
+      "id": "roundCushion-1",
+      "type": "roundCushion",
+      "x": 142,
+      "y": 28,
+      "rot": 0
+    },
+    {
+      "id": "floorCushion-1",
+      "type": "floorCushion",
+      "x": 144,
+      "y": 60,
+      "color": "#7d8b6a",
+      "rot": 0
+    },
+    {
+      "id": "lowShelf-1",
+      "type": "lowShelf",
+      "x": 118,
+      "y": 7,
+      "rot": 0
+    },
+    {
+      "id": "plantSmall-1",
+      "type": "plantSmall",
+      "x": 128,
+      "y": 7,
+      "z": 30,
+      "rot": 0
+    },
+    {
+      "id": "floorLamp-1",
+      "type": "floorLamp",
+      "x": 166,
+      "y": 8,
+      "color": "#f3e6cc",
+      "rot": 0
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 72,
+      "y": 14,
+      "rot": 0
+    }
+  ]
+}

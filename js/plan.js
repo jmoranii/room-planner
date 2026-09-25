@@ -1,4 +1,5 @@
 import { segments, along, add, wallPieces } from './geometry.js';
+import { spec, OVERHEAD } from './catalog.js';
 
 const f = n => Math.round(n * 100) / 100;
 const P = p => `${f(p[0])},${f(p[1])}`;
@@ -29,7 +30,7 @@ function bifold(seg, o) {
   return `<path class="bifold" d="M${P(a)} L${P(k1)} L${P(mid)} L${P(k2)} L${P(b)}"/>`;
 }
 
-export function drawPlan(svg, room) {
+export function drawPlan(svg, room, opts = {}) {
   const segs = segments(room);
   const H = room.ceiling;
   const c = room.closet, x0 = room.outline[1][0];
@@ -58,7 +59,7 @@ export function drawPlan(svg, room) {
     for (const o of seg.openings) {
       if (o.type === 'window') out.push(`<path class="glass" d="M${P(along(seg, o.from, seg.t - 1.7))} L${P(along(seg, o.to, seg.t - 1.7))}"/>`);
       if (o.type === 'door') out.push(swing(seg, o));
-      if (o.type === 'closet') out.push(bifold(seg, o));
+      if (o.type === 'closet' && opts.closetDoors !== false) out.push(bifold(seg, o));
     }
   });
 
@@ -93,7 +94,7 @@ export function drawPlan(svg, room) {
   out.push(text(45, 191, '123″ (10′3″)', 'dim'), text(131, 150, '57″', 'dim', 'start'), text(150, 132, '55″', 'dim'));
   out.push(text(92, 200, 'beam 82½″ high', 'dim'));
 
-  out.push('<g id="dyn"><g id="eye" style="display:none"><path class="cone"/><circle class="eyedot" r="3.5"/></g></g>');
+  out.push('<g id="items"></g><g id="dyn"><g id="eye" style="display:none"><path class="cone"/><circle class="eyedot" r="3.5"/></g></g>');
   svg.setAttribute('viewBox', '-46 -58 316 266');
   svg.innerHTML = out.join('');
 }
@@ -117,4 +118,30 @@ export function toPlan(svg, evt) {
   pt.x = evt.clientX; pt.y = evt.clientY;
   const q = pt.matrixTransform(svg.getScreenCTM().inverse());
   return [q.x, q.y];
+}
+
+const ROUND = new Set(['roundCushion', 'zafu', 'pouf', 'beanbag', 'roundRug', 'roundTable', 'lamp', 'saltLamp', 'lantern', 'basket', 'plant', 'hangingPlant', 'canopy', 'candles', 'sheepskin']);
+const FACING = new Set(['shelf', 'cubes', 'lounger', 'pillow', 'curtain', 'panel', 'frame', 'mirror', 'altar', 'ledge', 'divider']);
+const layer = s => (s.shape === 'rug' || s.shape === 'roundRug' || s.h < 1 ? 0 : OVERHEAD.has(s.shape) ? 2 : 1);
+const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+function itemSVG(it, selected) {
+  const s = spec(it);
+  const cls = ['item', OVERHEAD.has(s.shape) ? 'overhead' : '', layer(s) === 0 ? 'flatpiece' : '', selected ? 'selected' : ''].join(' ');
+  const body = ROUND.has(s.shape)
+    ? `<ellipse rx="${f(s.w / 2)}" ry="${f(s.d / 2)}"/>`
+    : `<rect x="${f(-s.w / 2)}" y="${f(-s.d / 2)}" width="${f(s.w)}" height="${f(s.d)}" rx="${s.shape === 'cushion' ? 2 : 0.5}"/>`;
+  const back = FACING.has(s.shape) ? `<line class="back" x1="${f(-s.w / 2)}" y1="${f(-s.d / 2)}" x2="${f(s.w / 2)}" y2="${f(-s.d / 2)}"/>` : '';
+  const label = s.w >= 16 && s.d >= 10 ? `<text class="ilbl" y="1.6" transform="rotate(${-(it.rot ?? 0)})" text-anchor="middle">${esc(it.label ?? s.short ?? s.name)}</text>` : '';
+  return `<g class="${cls}" data-id="${it.id}" transform="translate(${f(it.x)} ${f(it.y)}) rotate(${it.rot ?? 0})" style="--c:${s.color}">${body}${back}${label}</g>`;
+}
+
+export function drawItems(svg, items, selectedId) {
+  const sorted = [...items].sort((a, b) => layer(spec(a)) - layer(spec(b)));
+  svg.querySelector('#items').innerHTML = sorted.map(it => itemSVG(it, it.id === selectedId)).join('');
+}
+
+export function moveItemSVG(svg, it) {
+  const el = svg.querySelector(`#items [data-id="${it.id}"]`);
+  if (el) el.setAttribute('transform', `translate(${f(it.x)} ${f(it.y)}) rotate(${it.rot ?? 0})`);
 }
