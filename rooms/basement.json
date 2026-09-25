@@ -1,0 +1,50 @@
+{
+  "id": "basement",
+  "name": "Basement room",
+  "units": "inches",
+  "about": "Plan coordinates: x runs east from the AC wall, y runs south from the window wall, heights are measured up from the floor. The outline must be axis-aligned and listed clockwise.",
+  "ceiling": 92,
+  "outline": [[0, 0], [178, 0], [178, 117], [123, 117], [123, 174], [0, 174]],
+  "wallNames": ["Window wall", "Closet wall", "Short wall by side door", "Alcove wall", "Wall opposite window", "AC wall"],
+  "wallThickness": [9, 5, 5, 5, 5, 5],
+  "openings": [
+    { "id": "window", "type": "window", "wall": 0, "from": 8, "to": 53.5, "sill": 36, "head": 76.5 },
+    { "id": "closet", "type": "closet", "wall": 1, "from": 13, "to": 73, "head": 80 },
+    { "id": "sideDoor", "type": "door", "wall": 1, "from": 83, "to": 115, "head": 80, "hinge": "to", "state": "closed" },
+    { "id": "entry", "type": "door", "wall": 5, "from": 3, "to": 35, "head": 80, "hinge": "from", "state": "open" }
+  ],
+  "closet": { "x0": 183, "x1": 212.5, "y0": 5, "y1": 81, "t": 5, "outlet": 43, "cleanout": [192, 40] },
+  "post": { "x0": 87, "x1": 97, "y0": 80, "y1": 93 },
+  "beam": { "x0": 87, "x1": 97, "bottom": 82.5 },
+  "egressWell": { "wall": 0, "center": 30.75, "halfWidth": 27, "depth": 36, "floor": 28 },
+  "wallItems": [
+    { "type": "minisplit", "wall": 5, "from": 109, "to": 143, "z0": 74, "z1": 85, "depth": 8.5 },
+    { "type": "lineset", "wall": 5, "from": 143, "to": 174, "z0": 75, "z1": 79, "depth": 3 },
+    { "type": "outlet", "wall": 0, "at": 36 },
+    { "type": "outlet", "wall": 0, "at": 150 },
+    { "type": "outlet", "wall": 5, "at": 94 },
+    { "type": "outlet", "wall": 4, "at": 16 },
+    { "type": "outlet", "wall": 4, "at": 100 },
+    { "type": "outlet", "wall": 3, "at": 28 },
+    { "type": "outlet", "wall": 2, "at": 13 },
+    { "type": "switch", "wall": 5, "at": 44 },
+    { "type": "switch", "wall": 0, "at": 172 }
+  ],
+  "lights": [[43, 87], [137, 58]],
+  "measurements": [
+    ["Window wall, corner to closet end", "180 in (15 ft)"],
+    ["AC wall, window corner to door trim", "138 in"],
+    ["Entry door", "32 in"],
+    ["Wall opposite the window", "123 in (10 ft 3 in)"],
+    ["Alcove wall (step)", "57 in"],
+    ["Short wall by side door", "55 in"],
+    ["Window wall to outside corner", "117 in"],
+    ["Ceiling height", "92 in (7 ft 8 in)"],
+    ["Under the beam", "82.5 in (6 ft 10.5 in)"],
+    ["Post", "13 x 10 in, 80 in from window wall, 81 in from closet wall"],
+    ["Closet", "60 in opening, 76 x 29.5 in inside"],
+    ["Window", "45.5 x 40.5 in, sill 36 in, 8 in deep, trim starts 8 in from AC corner"],
+    ["AC unit", "starts 31 in from the window wall"],
+    ["Estimated from photos", "side door width, outlets, light fixtures"]
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "empty",
+  "name": "Empty room",
+  "room": "basement",
+  "notes": "The room as it is today, before anything goes in. Walls, post, beam, closet, doors and window are tape-measured.",
+  "items": []
+}

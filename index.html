@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basement Nook Planner</title>
+  <meta name="description" content="A to-scale 3D model and floor plan of a basement room, for trying out reading and meditation nook layouts.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='6' width='24' height='20' rx='2' fill='none' stroke='%232f7d6d' stroke-width='3'/%3E%3Crect x='14' y='6' width='4' height='20' fill='%232f7d6d'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <h1>Basement nook</h1>
+      <span class="sub">to-scale room model</span>
+    </div>
+    <div class="controls">
+      <label class="field">
+        <span>Version</span>
+        <select id="version" aria-label="Room version"></select>
+      </label>
+      <div class="seg" role="group" aria-label="View">
+        <button type="button" data-view="orbit" class="on">3D</button>
+        <button type="button" data-view="top">Top</button>
+        <button type="button" data-view="eye">Eye level</button>
+      </div>
+      <div class="seg" id="eyeHeight" role="group" aria-label="Eye height" hidden>
+        <button type="button" data-h="32" class="on">Seated</button>
+        <button type="button" data-h="62">Standing</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="panes">
+    <section class="view3d" id="view3d" aria-label="3D view of the room">
+      <p class="hint" id="hint">Loading the room…</p>
+    </section>
+
+    <section class="side" aria-label="Floor plan">
+      <svg id="plan" role="img" aria-label="Floor plan of the room, north up"></svg>
+      <ul class="legend" aria-label="Legend">
+        <li><i class="k-outlet"></i>Outlet</li>
+        <li><i class="k-switch"></i>Switch</li>
+        <li><i class="k-light"></i>Ceiling light</li>
+        <li><i class="k-beam"></i>Beam overhead</li>
+      </ul>
+      <p class="notes" id="notes"></p>
+      <details class="measure">
+        <summary>Measurements</summary>
+        <dl id="measurements"></dl>
+      </details>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
