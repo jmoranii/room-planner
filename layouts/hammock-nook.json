@@ -1,0 +1,142 @@
+{
+  "id": "hammock-nook",
+  "name": "Hammock + closet nook",
+  "room": "basement",
+  "notes": "Two lounging spots side by side. A hammock runs from the post up to the window wall of the closet side (about 8 ft 6 in between anchors, so a shorter hammock hung a little higher), which leaves the closet front clear. The closet is a cushioned reading nook with string lights and a book ledge, curtains tied back at the sides. Check the post before hanging anything from it: it holds up the beam, and a hammock pulls sideways.",
+  "mood": "evening",
+  "options": {
+    "closetDoors": false
+  },
+  "eye": {
+    "x": 150,
+    "y": 100,
+    "yaw": 235,
+    "pitch": 4
+  },
+  "items": [
+    {
+      "id": "hammock-1",
+      "type": "hammock",
+      "x": 121.0,
+      "y": 44.25,
+      "rot": 304.5,
+      "w": 102.5,
+      "h": 70,
+      "color": "#c9a66b"
+    },
+    {
+      "id": "closetCushion-1",
+      "type": "closetCushion",
+      "x": 198,
+      "y": 43,
+      "color": "#8a9a8c",
+      "rot": 0
+    },
+    {
+      "id": "pillow-1",
+      "type": "pillow",
+      "x": 208,
+      "y": 24,
+      "rot": 90,
+      "z": 4,
+      "color": "#c9a66b"
+    },
+    {
+      "id": "pillow-2",
+      "type": "pillow",
+      "x": 208,
+      "y": 43,
+      "rot": 90,
+      "z": 4,
+      "color": "#b86b4b"
+    },
+    {
+      "id": "pillow-3",
+      "type": "pillow",
+      "x": 208,
+      "y": 62,
+      "rot": 90,
+      "z": 4,
+      "color": "#e0c9a6"
+    },
+    {
+      "id": "bolster-1",
+      "type": "bolster",
+      "x": 197,
+      "y": 11,
+      "z": 4,
+      "rot": 0
+    },
+    {
+      "id": "ledge-1",
+      "type": "ledge",
+      "x": 210,
+      "y": 43,
+      "rot": 90,
+      "z": 50
+    },
+    {
+      "id": "stringLights-1",
+      "type": "stringLights",
+      "x": 186,
+      "y": 43,
+      "rot": 90,
+      "w": 60,
+      "z": 77
+    },
+    {
+      "id": "curtain-1",
+      "type": "curtain",
+      "x": 176,
+      "y": 18,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "curtain-2",
+      "type": "curtain",
+      "x": 176,
+      "y": 68,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "rugRunner-1",
+      "type": "rugRunner",
+      "x": 160,
+      "y": 46,
+      "rot": 90
+    },
+    {
+      "id": "sideTable-1",
+      "type": "sideTable",
+      "x": 112,
+      "y": 20,
+      "rot": 0
+    },
+    {
+      "id": "tableLamp-1",
+      "type": "tableLamp",
+      "x": 112,
+      "y": 20,
+      "z": 20,
+      "rot": 0
+    },
+    {
+      "id": "basket-1",
+      "type": "basket",
+      "x": 130,
+      "y": 100,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 72,
+      "y": 14,
+      "rot": 0
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { buildRoom, setFaded } from './scene.js';
 import { buildItem } from './items3d.js';
-import { drawPlan, drawItems, moveItemSVG, showEye, setEye, toPlan } from './plan.js';
+import { drawPlan, drawItems, moveItemSVG, markSelected, showEye, setEye, toPlan } from './plan.js';
 import { pointInRoom } from './geometry.js';
 import { CATALOG, CATEGORIES, SWATCHES, spec } from './catalog.js';
 import { checkLayout } from './checks.js';
@@ -95,9 +95,9 @@ function applyMood() {
 
 // ---------- views ----------
 const HINTS = {
-  orbit: 'Drag to orbit · scroll or pinch to zoom · right-drag or two fingers to pan · tap a piece to select it',
-  top: 'Looking straight down · drag to tilt',
-  eye: 'Drag the view to look around · tap or drag the floor on the plan to move',
+  orbit: 'Drag a piece to move it · drag empty space to orbit · pinch or scroll to zoom · two fingers to pan',
+  top: 'Looking straight down · drag a piece to move it · drag empty space to tilt',
+  eye: 'Drag to look around · drag a piece to move it · tap the plan to move where you sit',
 };
 
 function roomCenter() {
@@ -199,9 +199,16 @@ function newId(type) {
   return `${type}-${n}`;
 }
 
+// Selecting only restyles the plan in place: redrawing it would replace the element under a finger mid-drag.
 function select(id) {
   state.sel = id;
-  refresh();
+  markSelected(svg, id);
+  const m = id && meshes.get(id);
+  selBox.visible = !!m;
+  if (m) selBox.setFromObject(m.group);
+  renderInspector();
+  renderWarnings();
+  render();
 }
 
 function addItem(type) {
@@ -290,32 +297,78 @@ function placeEye(x, y) {
   applyEye();
 }
 
-// Look around by dragging the 3D view in eye mode; tap a piece in any mode to select it.
-let look = null;
+// 3D pointer: press a piece and drag to slide it across the floor, tap to select it;
+// otherwise drag orbits (or looks around at eye level).
 const raycaster = new THREE.Raycaster();
-renderer.domElement.addEventListener('pointerdown', e => {
-  look = { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY };
-  if (state.view === 'eye') renderer.domElement.setPointerCapture(e.pointerId);
-});
+let press = null;
+
+function rayFrom(e) {
+  const r = renderer.domElement.getBoundingClientRect();
+  raycaster.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
+  return raycaster;
+}
+
+function hitItem(e) {
+  const hit = rayFrom(e).intersectObjects(itemsGroup.children, true).find(h => h.object.isMesh);
+  let o = hit?.object;
+  while (o && !o.userData.id) o = o.parent;
+  return o ? { id: o.userData.id, point: hit.point } : null;
+}
+
+// Capture phase on the container runs before OrbitControls, so pressing a piece never starts an orbit.
+host.addEventListener('pointerdown', e => {
+  if (e.target !== renderer.domElement) return;
+  const hit = hitItem(e);
+  press = { x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false, hit };
+  if (hit) {
+    controls.enabled = false;
+    const it = byId(hit.id);
+    press.plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -hit.point.y);
+    press.dx = hit.point.x - it.x;
+    press.dz = hit.point.z - it.y;
+  }
+  if (hit || state.view === 'eye') renderer.domElement.setPointerCapture(e.pointerId);
+}, true);
+
 renderer.domElement.addEventListener('pointermove', e => {
-  if (!look || state.view !== 'eye') return;
-  state.eye.yaw -= (e.clientX - look.x) * 0.3;
-  state.eye.pitch = Math.max(-70, Math.min(70, state.eye.pitch + (e.clientY - look.y) * 0.3));
-  look.x = e.clientX;
-  look.y = e.clientY;
+  if (!press) return;
+  if (Math.hypot(e.clientX - press.x0, e.clientY - press.y0) > 6) press.moved = true;
+  if (press.hit) {
+    if (!press.moved) return;
+    if (state.sel !== press.hit.id) select(press.hit.id);
+    const p = rayFrom(e).ray.intersectPlane(press.plane, new THREE.Vector3());
+    if (!p) return;
+    const it = byId(press.hit.id);
+    it.x = Math.round(p.x - press.dx);
+    it.y = Math.round(p.z - press.dz);
+    moveLive(it);
+    return;
+  }
+  if (state.view !== 'eye') return;
+  state.eye.yaw -= (e.clientX - press.x) * 0.3;
+  state.eye.pitch = Math.max(-70, Math.min(70, state.eye.pitch + (e.clientY - press.y) * 0.3));
+  press.x = e.clientX;
+  press.y = e.clientY;
   applyEye();
 });
-renderer.domElement.addEventListener('pointerup', e => {
-  if (look && Math.hypot(e.clientX - look.x0, e.clientY - look.y0) < 5) {
-    const r = renderer.domElement.getBoundingClientRect();
-    raycaster.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
-    const hit = raycaster.intersectObjects(itemsGroup.children, true)[0];
-    let o = hit?.object;
-    while (o && !o.userData.id) o = o.parent;
-    select(o?.userData.id ?? null);
-  }
-  look = null;
+
+renderer.domElement.addEventListener('pointerup', () => {
+  if (!press) return;
+  if (press.hit && press.moved) { renderWarnings(); renderInspector(); saveDraft(); }
+  else if (!press.moved) select(press.hit?.id ?? null);
+  controls.enabled = state.view !== 'eye';
+  press = null;
 });
+renderer.domElement.addEventListener('pointercancel', () => {
+  controls.enabled = state.view !== 'eye';
+  press = null;
+});
+
+// On touch screens, a finger on a piece (or anywhere at eye level) drags instead of scrolling the page.
+svg.addEventListener('touchstart', e => {
+  if (e.target.closest?.('.item') || state.view === 'eye') e.preventDefault();
+}, { passive: false });
+svg.addEventListener('pointercancel', () => { drag = null; });
 
 document.addEventListener('keydown', e => {
   if (!state.sel || e.target.closest('input, select, textarea')) return;
@@ -359,11 +412,27 @@ function num(label, key, value, stepVal = 1) {
 function renderInspector() {
   const box = $('#inspector');
   const it = state.sel && byId(state.sel);
+  const bar = $('#selbar');
   if (!it) {
-    box.innerHTML = '<p class="muted">Select a piece on the plan or in the 3D view to move, turn or recolor it. Drag pieces on the plan to place them.</p>';
+    box.innerHTML = '<p class="muted">Tap a piece to select it. To move it, press and drag it, in the 3D view or on the plan. The arrow buttons nudge it too.</p>';
+    bar.hidden = true;
     return;
   }
   const s = spec(it);
+  bar.hidden = false;
+  bar.innerHTML = `
+    <strong>${s.short ?? s.name}</strong>
+    <span class="selhint">drag it to move</span>
+    <span class="selbtns">
+      <button type="button" data-rot="-45" aria-label="Turn left">↶</button>
+      <button type="button" data-rot="45" aria-label="Turn right">↷</button>
+      <button type="button" data-move="-6,0" aria-label="Move west">←</button>
+      <button type="button" data-move="0,-6" aria-label="Move north">↑</button>
+      <button type="button" data-move="0,6" aria-label="Move south">↓</button>
+      <button type="button" data-move="6,0" aria-label="Move east">→</button>
+      <button type="button" data-act="del" class="danger" aria-label="Remove">Remove</button>
+      <button type="button" data-act="done" aria-label="Done">Done</button>
+    </span>`;
   box.innerHTML = `
     <div class="insp-head"><strong>${s.name}</strong>${s.note ? `<small>${s.note}</small>` : ''}</div>
     <div class="row">
@@ -372,6 +441,14 @@ function renderInspector() {
         <button type="button" data-rot="-15" aria-label="Turn left 15 degrees">↶ 15°</button>
         <button type="button" data-rot="15" aria-label="Turn right 15 degrees">15° ↷</button>
         <button type="button" data-rot="90" aria-label="Turn right 90 degrees">90° ↷</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="seg small" role="group" aria-label="Move">
+        <button type="button" data-move="-6,0" aria-label="Move west 6 inches">← 6″</button>
+        <button type="button" data-move="0,-6" aria-label="Move north 6 inches">↑ 6″</button>
+        <button type="button" data-move="0,6" aria-label="Move south 6 inches">↓ 6″</button>
+        <button type="button" data-move="6,0" aria-label="Move east 6 inches">6″ →</button>
       </div>
     </div>
     <div class="row nums">
@@ -388,16 +465,27 @@ function renderInspector() {
     <p class="muted tiny">At ${Math.round(it.x)}″ east, ${Math.round(it.y)}″ south · turned ${it.rot ?? 0}° · keys: arrows nudge, R turns, Delete removes</p>`;
 }
 
-$('#inspector').addEventListener('click', e => {
+function pieceAction(e) {
   const it = state.sel && byId(state.sel);
-  if (!it) return;
   const b = e.target.closest('button');
-  if (!b) return;
+  if (!it || !b) return;
   if (b.dataset.rot) updateItem(it.id, { rot: (((it.rot ?? 0) + Number(b.dataset.rot)) % 360 + 360) % 360 });
+  if (b.dataset.move) {
+    const [dx, dy] = b.dataset.move.split(',').map(Number);
+    it.x += dx;
+    it.y += dy;
+    moveLive(it);
+    renderWarnings();
+    renderInspector();
+    saveDraft();
+  }
   if (b.dataset.color) updateItem(it.id, { color: b.dataset.color });
   if (b.dataset.act === 'dup') duplicateItem(it.id);
   if (b.dataset.act === 'del') removeItem(it.id);
-});
+  if (b.dataset.act === 'done') select(null);
+}
+$('#inspector').addEventListener('click', pieceAction);
+$('#selbar').addEventListener('click', pieceAction);
 $('#inspector').addEventListener('change', e => {
   const it = state.sel && byId(state.sel);
   const k = e.target.dataset.k;
@@ -520,6 +608,8 @@ async function init() {
   sel.addEventListener('change', () => loadVersion(sel.value));
   await loadVersion(new URLSearchParams(location.search).get('v'));
 }
+
+if (new URLSearchParams(location.search).has('debug')) window.__rp = { camera, state, meshes };
 
 init().catch(err => {
   $('#hint').textContent = `Could not load the room: ${err.message}`;

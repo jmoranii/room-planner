@@ -13,12 +13,12 @@ A to-scale 3D model and floor plan of one basement room, built for trying out la
 ## Arranging pieces
 
 - **Add pieces** has about 45 furniture and decor pieces at real sizes, grouped into seating, rugs and mats, tables and storage, lighting, soft decor, and plants.
-- **Move a piece:** drag it on the plan. Tap it on the plan or in 3D to select it. Then you can turn it (buttons, or R / Shift+R), resize it, lift it off the floor (for shelves, lanterns and art), recolor it, duplicate it or remove it. The arrow keys nudge a piece 1 inch, or 6 inches with Shift.
+- **Move a piece:** press and drag it, in the 3D view or on the plan (works with a finger on phones). Tap it to select it; a toolbar appears over the 3D view with turn, nudge and remove buttons. Then you can turn it (buttons, or R / Shift+R), resize it, lift it off the floor (for shelves, lanterns and art), recolor it, duplicate it or remove it. The arrow keys nudge a piece 1 inch, or 6 inches with Shift.
 - **Checks** flags anything in a door swing, in front of the egress window, where the closet doors fold, or on top of the floor drain cover in the closet.
 - **Closet doors** can be turned off under Room options, for layouts that use the closet as a nook.
 - Edits are kept on the device you made them on. To keep one for good, press **Copy layout** and add it as a new file under `layouts/`.
 
-The version menu switches between saved layouts of the room, including eight starting ideas (closet reading nook, zen meditation room, cozy floor lounge, two zones, hammock hideaway, reading library, plant sanctuary, simple starter). Each version has its own link (`?v=<id>`), so a specific layout can be shared directly.
+The version menu switches between saved layouts of the room, including twelve starting ideas (among them a closet reading nook, zen meditation room, cozy floor lounge, reading library, plant sanctuary, several hammock placements, and a simple starter). Each version has its own link (`?v=<id>`), so a specific layout can be shared directly.
 
 ## Files
 

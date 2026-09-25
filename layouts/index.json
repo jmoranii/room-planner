@@ -43,5 +43,25 @@
     "id": "starter",
     "name": "Idea: simple starter",
     "file": "starter.json"
+  },
+  {
+    "id": "hammock-nook",
+    "name": "Idea: hammock + closet nook",
+    "file": "hammock-nook.json"
+  },
+  {
+    "id": "hammock-alcove",
+    "name": "Idea: hammock by the alcove",
+    "file": "hammock-alcove.json"
+  },
+  {
+    "id": "hammock-shrine",
+    "name": "Idea: big hammock + alcove shrine",
+    "file": "hammock-shrine.json"
+  },
+  {
+    "id": "closet-deluxe",
+    "name": "Idea: closet nook, deluxe",
+    "file": "closet-deluxe.json"
   }
 ]

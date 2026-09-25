@@ -1,0 +1,131 @@
+{
+  "id": "hammock-shrine",
+  "name": "Big hammock + alcove shrine",
+  "room": "basement",
+  "notes": "The full-length hammock (about 9 ft 10 in, post to the far corner of the closet side) for lounging, and a small meditation shrine tucked into the alcove behind the post: a zafu on a round cushion facing a low altar, with candles, a salt lamp and a plant. The closet doors come off and two curtain panels close across the opening, so storage stays hidden. Check the post before hanging anything from it: it holds up the beam, and a hammock pulls sideways.",
+  "mood": "evening",
+  "options": {
+    "closetDoors": false
+  },
+  "eye": {
+    "x": 100,
+    "y": 145,
+    "yaw": 0,
+    "pitch": -12
+  },
+  "items": [
+    {
+      "id": "rugRound-1",
+      "type": "rugRound",
+      "x": 134,
+      "y": 46,
+      "color": "#b9a58f",
+      "rot": 0
+    },
+    {
+      "id": "hammock-1",
+      "type": "hammock",
+      "x": 134.0,
+      "y": 44.75,
+      "rot": 315.2,
+      "w": 118.4,
+      "h": 66
+    },
+    {
+      "id": "curtain-1",
+      "type": "curtain",
+      "x": 177,
+      "y": 28,
+      "rot": 90,
+      "w": 30,
+      "color": "#c9b79c"
+    },
+    {
+      "id": "curtain-2",
+      "type": "curtain",
+      "x": 177,
+      "y": 58,
+      "rot": 90,
+      "w": 30,
+      "color": "#c9b79c"
+    },
+    {
+      "id": "altar-1",
+      "type": "altar",
+      "x": 117,
+      "y": 145,
+      "rot": 90
+    },
+    {
+      "id": "candles-1",
+      "type": "candles",
+      "x": 117,
+      "y": 152,
+      "z": 10,
+      "rot": 0
+    },
+    {
+      "id": "saltLamp-1",
+      "type": "saltLamp",
+      "x": 117,
+      "y": 138,
+      "z": 10,
+      "rot": 0
+    },
+    {
+      "id": "roundCushion-1",
+      "type": "roundCushion",
+      "x": 104,
+      "y": 145,
+      "color": "#3f4a5a",
+      "rot": 0
+    },
+    {
+      "id": "zafu-1",
+      "type": "zafu",
+      "x": 104,
+      "y": 145,
+      "z": 5,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 112,
+      "y": 164,
+      "w": 16,
+      "d": 16,
+      "rot": 0
+    },
+    {
+      "id": "lantern-1",
+      "type": "lantern",
+      "x": 108,
+      "y": 130,
+      "rot": 0
+    },
+    {
+      "id": "floorCushionLg-1",
+      "type": "floorCushionLg",
+      "x": 125,
+      "y": 96,
+      "color": "#b86b4b",
+      "rot": 0
+    },
+    {
+      "id": "stringLights-1",
+      "type": "stringLights",
+      "x": 99,
+      "y": 40,
+      "rot": 90,
+      "z": 78
+    },
+    {
+      "id": "plantTall-2",
+      "type": "plantTall",
+      "x": 72,
+      "y": 14,
+      "rot": 0
+    }
+  ]
+}

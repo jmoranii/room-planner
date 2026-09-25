@@ -7,17 +7,27 @@ import { segments, along, pointInRoom } from './geometry.js';
 function footprint(it) {
   const s = spec(it);
   const a = ((it.rot ?? 0) * Math.PI) / 180, c = Math.cos(a), n = Math.sin(a);
-  const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([u, v]) => [it.x + (u * s.w / 2) * c - (v * s.d / 2) * n, it.y + (u * s.w / 2) * n + (v * s.d / 2) * c]);
-  return { pts, axes: [[c, n], [-n, c]], s };
+  // A hung hammock is only ropes near its anchors; the fabric is wide in the middle.
+  const local = s.shape === 'hammock'
+    ? [[-s.w / 2, 0], [-0.3 * s.w, -s.d / 2], [0.3 * s.w, -s.d / 2], [s.w / 2, 0], [0.3 * s.w, s.d / 2], [-0.3 * s.w, s.d / 2]]
+    : [[-s.w / 2, -s.d / 2], [s.w / 2, -s.d / 2], [s.w / 2, s.d / 2], [-s.w / 2, s.d / 2]];
+  const pts = local.map(([u, v]) => [it.x + u * c - v * n, it.y + u * n + v * c]);
+  return { pts, s };
 }
 
-// Separating-axis test between a turned piece and an axis-aligned zone.
+const edgeNormals = ps => ps.map((p, i) => {
+  const q = ps[(i + 1) % ps.length];
+  return [-(q[1] - p[1]), q[0] - p[0]];
+});
+
+// Separating-axis test between a (convex) piece footprint and an axis-aligned zone.
 function overlaps(f, r) {
   const rect = [[r.x0, r.y0], [r.x1, r.y0], [r.x1, r.y1], [r.x0, r.y1]];
-  for (const [ax, ay] of [[1, 0], [0, 1], ...f.axes]) {
+  for (const [ax, ay] of [[1, 0], [0, 1], ...edgeNormals(f.pts)]) {
     const proj = ps => ps.map(([x, y]) => x * ax + y * ay);
     const a = proj(f.pts), b = proj(rect);
-    if (Math.max(...a) <= Math.min(...b) + 0.01 || Math.max(...b) <= Math.min(...a) + 0.01) return false;
+    const eps = 0.01 * Math.hypot(ax, ay);
+    if (Math.max(...a) <= Math.min(...b) + eps || Math.max(...b) <= Math.min(...a) + eps) return false;
   }
   return true;
 }

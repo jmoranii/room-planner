@@ -1,0 +1,173 @@
+{
+  "id": "hammock-alcove",
+  "name": "Hammock by the alcove",
+  "room": "basement",
+  "notes": "The hammock moves to the window side: from the post down to the wall opposite the window (about 8 ft 2 in between anchors), beside the alcove, over a round rug. The entry door still swings clear, and the way to the egress window stays open. The closet side becomes the reading nook, with the doors off and a rug and floor cushions in front. Check the post before hanging anything from it: it holds up the beam, and a hammock pulls sideways.",
+  "mood": "evening",
+  "options": {
+    "closetDoors": false
+  },
+  "eye": {
+    "x": 30,
+    "y": 60,
+    "yaw": 55,
+    "pitch": 0
+  },
+  "items": [
+    {
+      "id": "rugRound-1",
+      "type": "rugRound",
+      "x": 66,
+      "y": 126,
+      "color": "#c8b79c",
+      "rot": 0
+    },
+    {
+      "id": "hammock-1",
+      "type": "hammock",
+      "x": 68.5,
+      "y": 129.25,
+      "rot": 118.8,
+      "w": 97.6,
+      "h": 70,
+      "color": "#7d8b6a"
+    },
+    {
+      "id": "closetCushion-1",
+      "type": "closetCushion",
+      "x": 198,
+      "y": 43,
+      "color": "#6f7f8f",
+      "rot": 0
+    },
+    {
+      "id": "pillow-1",
+      "type": "pillow",
+      "x": 208,
+      "y": 24,
+      "rot": 90,
+      "z": 4,
+      "color": "#c9a66b"
+    },
+    {
+      "id": "pillow-2",
+      "type": "pillow",
+      "x": 208,
+      "y": 43,
+      "rot": 90,
+      "z": 4,
+      "color": "#b86b4b"
+    },
+    {
+      "id": "pillow-3",
+      "type": "pillow",
+      "x": 208,
+      "y": 62,
+      "rot": 90,
+      "z": 4,
+      "color": "#e0c9a6"
+    },
+    {
+      "id": "bolster-1",
+      "type": "bolster",
+      "x": 197,
+      "y": 11,
+      "z": 4,
+      "rot": 0
+    },
+    {
+      "id": "ledge-1",
+      "type": "ledge",
+      "x": 210,
+      "y": 43,
+      "rot": 90,
+      "z": 50
+    },
+    {
+      "id": "stringLights-1",
+      "type": "stringLights",
+      "x": 186,
+      "y": 43,
+      "rot": 90,
+      "w": 60,
+      "z": 77
+    },
+    {
+      "id": "curtain-1",
+      "type": "curtain",
+      "x": 176,
+      "y": 18,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "curtain-2",
+      "type": "curtain",
+      "x": 176,
+      "y": 68,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "rug46-1",
+      "type": "rug46",
+      "x": 148,
+      "y": 45,
+      "rot": 90
+    },
+    {
+      "id": "roundCushion-1",
+      "type": "roundCushion",
+      "x": 142,
+      "y": 28,
+      "rot": 0
+    },
+    {
+      "id": "floorCushion-1",
+      "type": "floorCushion",
+      "x": 144,
+      "y": 60,
+      "color": "#7d8b6a",
+      "rot": 0
+    },
+    {
+      "id": "floorLamp-1",
+      "type": "floorLamp",
+      "x": 166,
+      "y": 8,
+      "rot": 0
+    },
+    {
+      "id": "stringLights-2",
+      "type": "stringLights",
+      "x": 99,
+      "y": 40,
+      "rot": 90,
+      "z": 78
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 108,
+      "y": 162,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-2",
+      "type": "plantTall",
+      "x": 72,
+      "y": 14,
+      "rot": 0
+    },
+    {
+      "id": "pouf-1",
+      "type": "pouf",
+      "x": 36,
+      "y": 100,
+      "color": "#c9a66b",
+      "rot": 0
+    }
+  ]
+}

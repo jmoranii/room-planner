@@ -145,3 +145,7 @@ export function moveItemSVG(svg, it) {
   const el = svg.querySelector(`#items [data-id="${it.id}"]`);
   if (el) el.setAttribute('transform', `translate(${f(it.x)} ${f(it.y)}) rotate(${it.rot ?? 0})`);
 }
+
+export function markSelected(svg, id) {
+  svg.querySelectorAll('#items .item').forEach(el => el.classList.toggle('selected', el.dataset.id === id));
+}

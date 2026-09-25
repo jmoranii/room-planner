@@ -44,6 +44,7 @@
 
 body {
   margin: 0;
+  overflow-anchor: none;
   background: var(--bg);
   color: var(--text);
   font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -196,7 +197,18 @@ select, .seg button {
 .check { display: flex; align-items: center; gap: 8px; font-size: 13px; }
 .share { margin-top: 16px; }
 
+.selbar { position: absolute; left: 10px; right: 10px; top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 10px; border-radius: 10px; background: color-mix(in srgb, var(--panel) 92%, transparent); border: 1px solid var(--line); font-size: 13px; z-index: 2; }
+.selbar .selhint { color: var(--muted); font-size: 12px; }
+.selbar .selbtns { display: flex; flex-wrap: wrap; gap: 4px; margin-left: auto; }
+.selbar button { font: inherit; font-size: 14px; min-width: 34px; min-height: 34px; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--text); cursor: pointer; }
+.selbar button.danger { color: var(--danger); font-size: 12px; }
+#plan .item { touch-action: none; }
 .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); padding: 8px 14px; border-radius: 8px; background: var(--ink); color: var(--paper); font-size: 13px; z-index: 5; }
+
+@media (max-width: 480px) {
+  .selbar { top: 6px; left: 6px; right: 6px; padding: 6px 8px; }
+  .selbar .selhint { display: none; }
+}
 
 @media (max-width: 820px) {
   .panes { grid-template-columns: 1fr; height: auto; }

@@ -1,0 +1,179 @@
+{
+  "id": "closet-deluxe",
+  "name": "Closet nook, deluxe",
+  "room": "basement",
+  "notes": "The closet as its own little room: a 29 \u00d7 75 in cushion, pillows along the back wall, a bolster at each end, a wall sconce on each side wall for reading light, and a book ledge overhead. Curtains are tied back at the opening so it can close off completely. Out front: a sheepskin, a floor pillow, a side table for tea and a low shelf. Everything else in the room stays open.",
+  "mood": "evening",
+  "options": {
+    "closetDoors": false
+  },
+  "eye": {
+    "x": 150,
+    "y": 46,
+    "yaw": 0,
+    "pitch": -6
+  },
+  "items": [
+    {
+      "id": "closetCushion-1",
+      "type": "closetCushion",
+      "x": 198,
+      "y": 43,
+      "color": "#7a8f7e",
+      "rot": 0
+    },
+    {
+      "id": "pillow-1",
+      "type": "pillow",
+      "x": 208,
+      "y": 26,
+      "rot": 90,
+      "z": 4,
+      "color": "#c9a66b"
+    },
+    {
+      "id": "pillow-2",
+      "type": "pillow",
+      "x": 208,
+      "y": 43,
+      "rot": 90,
+      "z": 4,
+      "color": "#e0c9a6"
+    },
+    {
+      "id": "bolster-1",
+      "type": "bolster",
+      "x": 197,
+      "y": 11,
+      "z": 4,
+      "rot": 0
+    },
+    {
+      "id": "ledge-1",
+      "type": "ledge",
+      "x": 210,
+      "y": 43,
+      "rot": 90,
+      "z": 50
+    },
+    {
+      "id": "curtain-1",
+      "type": "curtain",
+      "x": 176,
+      "y": 18,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "curtain-2",
+      "type": "curtain",
+      "x": 176,
+      "y": 68,
+      "rot": 90,
+      "w": 10,
+      "color": "#8a9a8c"
+    },
+    {
+      "id": "pillow-4",
+      "type": "pillow",
+      "x": 208,
+      "y": 76,
+      "rot": 90,
+      "z": 4,
+      "color": "#8c6e5a"
+    },
+    {
+      "id": "pillow-3",
+      "type": "pillow",
+      "x": 208,
+      "y": 60,
+      "rot": 90,
+      "z": 4,
+      "color": "#b86b4b"
+    },
+    {
+      "id": "bolster-2",
+      "type": "bolster",
+      "x": 197,
+      "y": 76,
+      "z": 4,
+      "rot": 0
+    },
+    {
+      "id": "sconce-1",
+      "type": "sconce",
+      "x": 200,
+      "y": 9.5,
+      "z": 44,
+      "rot": 0
+    },
+    {
+      "id": "sconce-2",
+      "type": "sconce",
+      "x": 200,
+      "y": 76.5,
+      "rot": 180,
+      "z": 44
+    },
+    {
+      "id": "sheepskin-1",
+      "type": "sheepskin",
+      "x": 162,
+      "y": 43,
+      "rot": 90
+    },
+    {
+      "id": "floorCushionLg-1",
+      "type": "floorCushionLg",
+      "x": 136,
+      "y": 36,
+      "color": "#c9a66b",
+      "rot": 0
+    },
+    {
+      "id": "sideTable-1",
+      "type": "sideTable",
+      "x": 150,
+      "y": 70,
+      "rot": 0
+    },
+    {
+      "id": "candles-1",
+      "type": "candles",
+      "x": 150,
+      "y": 70,
+      "z": 20,
+      "rot": 0
+    },
+    {
+      "id": "lowShelf-1",
+      "type": "lowShelf",
+      "x": 118,
+      "y": 7,
+      "rot": 0
+    },
+    {
+      "id": "plantSmall-1",
+      "type": "plantSmall",
+      "x": 128,
+      "y": 7,
+      "z": 30,
+      "rot": 0
+    },
+    {
+      "id": "basket-1",
+      "type": "basket",
+      "x": 112,
+      "y": 60,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 72,
+      "y": 14,
+      "rot": 0
+    }
+  ]
+}
