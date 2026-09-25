@@ -6,14 +6,14 @@ A to-scale 3D model and floor plan of one basement room, built for trying out la
 
 - **3D:** orbit around the room. Walls between you and the room fade out so you can see inside.
 - **Top:** straight down, like the plan.
-- **Eye level:** stand or sit inside the room. Drag to look around, and tap or drag on the plan to move.
+- **Eye level:** stand or sit inside the room. Drag to look around. To walk, use the arrow buttons (hold to keep going), double-tap the floor, tap the plan, or use the arrow keys or WASD.
 
 **Day / Evening** switches the lighting. In Evening, the lamps, lanterns, string lights and candles are the only light.
 
 ## Arranging pieces
 
 - **Add pieces** has about 45 furniture and decor pieces at real sizes, grouped into seating, rugs and mats, tables and storage, lighting, soft decor, and plants.
-- **Move a piece:** press and drag it, in the 3D view or on the plan (works with a finger on phones). Tap it to select it; a toolbar appears over the 3D view with turn, nudge and remove buttons. Then you can turn it (buttons, or R / Shift+R), resize it, lift it off the floor (for shelves, lanterns and art), recolor it, duplicate it or remove it. The arrow keys nudge a piece 1 inch, or 6 inches with Shift.
+- **Move a piece:** double-tap (or double-click) it to select it, then drag it, in the 3D view or on the plan. Only the selected piece moves, so stray touches just orbit the view. A toolbar over the 3D view has turn, nudge, remove and Done buttons. Then you can turn it (buttons, or R / Shift+R), resize it, lift it off the floor (for shelves, lanterns and art), recolor it, duplicate it or remove it. The arrow keys nudge a piece 1 inch, or 6 inches with Shift.
 - **Checks** flags anything in a door swing, in front of the egress window, where the closet doors fold, or on top of the floor drain cover in the closet.
 - **Closet doors** can be turned off under Room options, for layouts that use the closet as a nook.
 - Edits are kept on the device you made them on. To keep one for good, press **Copy layout** and add it as a new file under `layouts/`.

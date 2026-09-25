@@ -202,7 +202,11 @@ select, .seg button {
 .selbar .selbtns { display: flex; flex-wrap: wrap; gap: 4px; margin-left: auto; }
 .selbar button { font: inherit; font-size: 14px; min-width: 34px; min-height: 34px; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--text); cursor: pointer; }
 .selbar button.danger { color: var(--danger); font-size: 12px; }
-#plan .item { touch-action: none; }
+#plan .item.selected { touch-action: none; }
+.view3d.eye .hint { max-width: calc(100% - 200px); }
+.walkpad { position: absolute; right: 12px; bottom: 48px; display: grid; grid-template-columns: repeat(3, 48px); gap: 6px; z-index: 2; user-select: none; -webkit-user-select: none; }
+.walkpad button { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 90%, transparent); color: var(--text); font-size: 20px; cursor: pointer; touch-action: none; -webkit-touch-callout: none; }
+.walkpad button:active { background: var(--accent-soft); }
 .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); padding: 8px 14px; border-radius: 8px; background: var(--ink); color: var(--paper); font-size: 13px; z-index: 5; }
 
 @media (max-width: 480px) {

@@ -95,9 +95,9 @@ function applyMood() {
 
 // ---------- views ----------
 const HINTS = {
-  orbit: 'Drag a piece to move it · drag empty space to orbit · pinch or scroll to zoom · two fingers to pan',
-  top: 'Looking straight down · drag a piece to move it · drag empty space to tilt',
-  eye: 'Drag to look around · drag a piece to move it · tap the plan to move where you sit',
+  orbit: 'Double-tap a piece to select it, then drag it to move · drag elsewhere to orbit · pinch or scroll to zoom',
+  top: 'Looking straight down · double-tap a piece to select it, then drag it · drag elsewhere to tilt',
+  eye: 'Drag to look around · use the arrows or double-tap the floor to walk · double-tap a piece to select it',
 };
 
 function roomCenter() {
@@ -117,6 +117,8 @@ function setView(view) {
   state.view = view;
   document.querySelectorAll('[data-view]').forEach(b => b.classList.toggle('on', b.dataset.view === view));
   $('#eyeHeight').hidden = view !== 'eye';
+  $('#walkpad').hidden = view !== 'eye';
+  host.classList.toggle('eye', view === 'eye');
   $('#hint').textContent = HINTS[view];
   state.built.ceiling.visible = view === 'eye';
   showEye(svg, view === 'eye');
@@ -258,48 +260,100 @@ function moveLive(it) {
 }
 
 // ---------- plan interaction ----------
+// Double-tap (or double-click) selects a piece; only the selected piece can be dragged,
+// so a stray touch never grabs or selects anything.
+const DOUBLE_MS = 380;
+let lastTap = null;
+function isDoubleTap(e, key) {
+  const now = performance.now();
+  const hit = lastTap && now - lastTap.t < DOUBLE_MS && lastTap.key === key && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 30;
+  lastTap = hit ? null : { t: now, x: e.clientX, y: e.clientY, key };
+  return hit;
+}
+
 let drag = null;
 svg.addEventListener('pointerdown', e => {
   const el = e.target.closest?.('.item');
   const [x, y] = toPlan(svg, e);
-  if (el) {
-    const it = byId(el.dataset.id);
-    if (state.sel !== it.id) select(it.id);
-    drag = { kind: 'item', id: it.id, dx: x - it.x, dy: y - it.y, moved: false };
-  } else if (state.view === 'eye') {
-    drag = { kind: 'eye' };
+  drag = { x0: e.clientX, y0: e.clientY, id: el?.dataset.id, moved: false };
+  if (el && el.dataset.id === state.sel) {
+    const it = byId(state.sel);
+    Object.assign(drag, { kind: 'item', dx: x - it.x, dy: y - it.y });
+  } else if (!el && state.view === 'eye') {
+    drag.kind = 'eye';
     placeEye(x, y);
-  } else {
-    select(null);
-    return;
   }
-  svg.setPointerCapture(e.pointerId);
+  if (drag.kind) svg.setPointerCapture(e.pointerId);
 });
 svg.addEventListener('pointermove', e => {
   if (!drag) return;
+  if (Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 6) drag.moved = true;
   const [x, y] = toPlan(svg, e);
   if (drag.kind === 'eye') return placeEye(x, y);
+  if (drag.kind !== 'item' || !drag.moved) return;
   const it = byId(drag.id);
   it.x = Math.round(x - drag.dx);
   it.y = Math.round(y - drag.dy);
-  drag.moved = true;
   moveLive(it);
 });
-svg.addEventListener('pointerup', () => {
-  if (drag?.kind === 'item' && drag.moved) { renderWarnings(); renderInspector(); saveDraft(); }
+svg.addEventListener('pointerup', e => {
+  if (!drag) return;
+  if (drag.kind === 'item' && drag.moved) { renderWarnings(); renderInspector(); saveDraft(); }
+  else if (!drag.moved && isDoubleTap(e, drag.id ?? 'floor')) {
+    if (drag.id) select(drag.id);
+    else if (state.view !== 'eye') select(null);
+  }
   drag = null;
 });
+svg.addEventListener('pointercancel', () => { drag = null; });
+
+// On touch screens, a finger on the selected piece (or on the plan at eye level) drags instead of scrolling.
+svg.addEventListener('touchstart', e => {
+  const el = e.target.closest?.('.item');
+  if ((el && el.dataset.id === state.sel) || (!el && state.view === 'eye')) e.preventDefault();
+}, { passive: false });
 
 function placeEye(x, y) {
-  if (!pointInRoom(state.room, x, y)) return;
+  if (!pointInRoom(state.room, x, y)) return false;
   state.eye.x = x;
   state.eye.y = y;
   applyEye();
+  return true;
 }
 
-// 3D pointer: press a piece and drag to slide it across the floor, tap to select it;
-// otherwise drag orbits (or looks around at eye level).
+// Walk at eye level: step forward or back along the view direction, or turn.
+function walk(forward, turn) {
+  const e = state.eye;
+  if (turn) e.yaw += turn;
+  if (forward) {
+    const a = (e.yaw * Math.PI) / 180;
+    const nx = e.x + Math.cos(a) * forward, ny = e.y + Math.sin(a) * forward;
+    // Stop about 9 inches short of a wall instead of walking into it.
+    const clear = [[0, 0], [9, 0], [-9, 0], [0, 9], [0, -9]].every(([dx, dy]) => pointInRoom(state.room, nx + dx, ny + dy));
+    if (clear) placeEye(nx, ny);
+  }
+  applyEye();
+}
+
+let walkTimer = null;
+function stopWalking() { clearTimeout(walkTimer); clearInterval(walkTimer); walkTimer = null; }
+$('#walkpad').addEventListener('pointerdown', e => {
+  const b = e.target.closest('[data-walk]');
+  if (!b) return;
+  e.preventDefault();
+  const [f, t] = b.dataset.walk.split(',').map(Number);
+  walk(f, t);
+  stopWalking();
+  // One tap takes a full step; holding keeps walking at about a normal pace after a short pause.
+  walkTimer = setTimeout(() => { walkTimer = setInterval(() => walk(f * 0.45, t * 0.35), 90); }, 320);
+});
+for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) $('#walkpad').addEventListener(ev, stopWalking);
+$('#walkpad').addEventListener('contextmenu', e => e.preventDefault());
+
+// 3D pointer: drag the selected piece to slide it across the floor; double-tap a piece to select it;
+// at eye level, double-tap the floor to walk there. Anything else orbits (or looks around at eye level).
 const raycaster = new THREE.Raycaster();
+const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 let press = null;
 
 function rayFrom(e) {
@@ -315,27 +369,27 @@ function hitItem(e) {
   return o ? { id: o.userData.id, point: hit.point } : null;
 }
 
-// Capture phase on the container runs before OrbitControls, so pressing a piece never starts an orbit.
+// Capture phase on the container runs before OrbitControls, so pressing the selected piece never starts an orbit.
 host.addEventListener('pointerdown', e => {
   if (e.target !== renderer.domElement) return;
   const hit = hitItem(e);
-  press = { x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false, hit };
-  if (hit) {
+  press = { x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false, hit, dragging: false };
+  if (hit && hit.id === state.sel) {
+    press.dragging = true;
     controls.enabled = false;
     const it = byId(hit.id);
     press.plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -hit.point.y);
     press.dx = hit.point.x - it.x;
     press.dz = hit.point.z - it.y;
   }
-  if (hit || state.view === 'eye') renderer.domElement.setPointerCapture(e.pointerId);
+  if (press.dragging || state.view === 'eye') renderer.domElement.setPointerCapture(e.pointerId);
 }, true);
 
 renderer.domElement.addEventListener('pointermove', e => {
   if (!press) return;
   if (Math.hypot(e.clientX - press.x0, e.clientY - press.y0) > 6) press.moved = true;
-  if (press.hit) {
+  if (press.dragging) {
     if (!press.moved) return;
-    if (state.sel !== press.hit.id) select(press.hit.id);
     const p = rayFrom(e).ray.intersectPlane(press.plane, new THREE.Vector3());
     if (!p) return;
     const it = byId(press.hit.id);
@@ -352,10 +406,17 @@ renderer.domElement.addEventListener('pointermove', e => {
   applyEye();
 });
 
-renderer.domElement.addEventListener('pointerup', () => {
+renderer.domElement.addEventListener('pointerup', e => {
   if (!press) return;
-  if (press.hit && press.moved) { renderWarnings(); renderInspector(); saveDraft(); }
-  else if (!press.moved) select(press.hit?.id ?? null);
+  if (press.dragging && press.moved) { renderWarnings(); renderInspector(); saveDraft(); }
+  else if (!press.moved && isDoubleTap(e, press.hit?.id ?? 'floor')) {
+    const flat = press.hit && spec(byId(press.hit.id)).h < 1;
+    if (press.hit && !(flat && state.view === 'eye')) select(press.hit.id);
+    else if (state.view === 'eye') {
+      const p = rayFrom(e).ray.intersectPlane(floorPlane, new THREE.Vector3());
+      if (p) placeEye(p.x, p.z);
+    } else select(null);
+  }
   controls.enabled = state.view !== 'eye';
   press = null;
 });
@@ -364,14 +425,15 @@ renderer.domElement.addEventListener('pointercancel', () => {
   press = null;
 });
 
-// On touch screens, a finger on a piece (or anywhere at eye level) drags instead of scrolling the page.
-svg.addEventListener('touchstart', e => {
-  if (e.target.closest?.('.item') || state.view === 'eye') e.preventDefault();
-}, { passive: false });
-svg.addEventListener('pointercancel', () => { drag = null; });
-
 document.addEventListener('keydown', e => {
-  if (!state.sel || e.target.closest('input, select, textarea')) return;
+  if (e.target.closest('input, select, textarea')) return;
+  if (!state.sel && state.view === 'eye') {
+    const keys = { ArrowUp: [8, 0], w: [8, 0], ArrowDown: [-8, 0], s: [-8, 0], ArrowLeft: [0, -8], a: [0, -8], ArrowRight: [0, 8], d: [0, 8] };
+    const k = keys[e.key];
+    if (k) { e.preventDefault(); walk(...k); }
+    return;
+  }
+  if (!state.sel) return;
   const it = byId(state.sel);
   const step = e.shiftKey ? 6 : 1;
   const moves = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] };
@@ -414,7 +476,7 @@ function renderInspector() {
   const it = state.sel && byId(state.sel);
   const bar = $('#selbar');
   if (!it) {
-    box.innerHTML = '<p class="muted">Tap a piece to select it. To move it, press and drag it, in the 3D view or on the plan. The arrow buttons nudge it too.</p>';
+    box.innerHTML = '<p class="muted">Double-tap a piece (in the 3D view or on the plan) to select it. Then drag it to move it, or use the buttons. Tap Done when you are finished.</p>';
     bar.hidden = true;
     return;
   }

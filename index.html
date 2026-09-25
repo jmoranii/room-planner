@@ -46,6 +46,14 @@
   <main class="panes">
     <section class="view3d" id="view3d" aria-label="3D view of the room">
       <div class="selbar" id="selbar" hidden></div>
+      <div class="walkpad" id="walkpad" role="group" aria-label="Walk" hidden>
+        <button type="button" data-walk="0,-12" aria-label="Turn left">↺</button>
+        <button type="button" data-walk="12,0" aria-label="Step forward">▲</button>
+        <button type="button" data-walk="0,12" aria-label="Turn right">↻</button>
+        <span></span>
+        <button type="button" data-walk="-12,0" aria-label="Step back">▼</button>
+        <span></span>
+      </div>
       <p class="hint" id="hint">Loading the room…</p>
     </section>
 
