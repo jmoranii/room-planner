@@ -330,6 +330,127 @@ const BUILD = {
   },
 };
 
+function stripeTexture(color) {
+  return textureFromCanvas(8, 64, (g, w, h) => {
+    const base = new THREE.Color(color);
+    const cols = [base.getStyle(), shade(color, 0.8).getStyle(), shade(color, 1.12).getStyle(), shade(color, 0.65).getStyle()];
+    for (let y = 0; y < h; y += 8) { g.fillStyle = cols[(y / 8) % cols.length]; g.fillRect(0, y, w, 8); }
+  });
+}
+
+// A sagging fabric body from -len/2 to len/2, ends at yEnd, lowest point yLow.
+function hammockBody(len, width, yEnd, yLow, color) {
+  const N = 28, M = 8, pos = [], uv = [], idx = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N, sn = Math.sin(Math.PI * t);
+    const yc = yEnd - (yEnd - yLow) * sn, hw = (width / 2) * Math.pow(sn, 0.55) + 0.6;
+    for (let j = 0; j <= M; j++) {
+      const v = (j / M) * 2 - 1;
+      pos.push(-len / 2 + t * len, yc + v * v * 5 * sn, v * hw);
+      uv.push(t, j / M);
+    }
+  }
+  for (let i = 0; i < N; i++) for (let j = 0; j < M; j++) {
+    const a = i * (M + 1) + j, b = a + M + 1;
+    idx.push(a, b, a + 1, b, b + 1, a + 1);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  geo.setIndex(idx);
+  geo.computeVertexNormals();
+  return new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: stripeTexture(color), side: THREE.DoubleSide }));
+}
+
+function rope(a, b, color = 0x8a7a66, r = 0.35) {
+  const va = new THREE.Vector3(...a), vb = new THREE.Vector3(...b);
+  const len = va.distanceTo(vb);
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 6), mat(color));
+  m.position.copy(va).add(vb).multiplyScalar(0.5);
+  m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), vb.clone().sub(va).normalize());
+  return m;
+}
+
+Object.assign(BUILD, {
+  hammock(s) {
+    const L = s.w * 0.72, yEnd = s.h - ((s.w - L) / 2) * 0.55;
+    const out = [hammockBody(L, s.d, yEnd, 16, s.color)];
+    for (const sx of [-1, 1]) {
+      out.push(rope([sx * s.w / 2, s.h, 0], [sx * L / 2, yEnd, 0]));
+      out.push(mesh(new THREE.BoxGeometry(2.5, 3, 2.5), mat('#6b5443'), sx * s.w / 2, s.h, 0));
+    }
+    return out;
+  },
+  hammockStand(s) {
+    const wood = mat(s.color), out = [];
+    out.push(mesh(new THREE.BoxGeometry(s.w * 0.7, 2.5, 3), wood, 0, 1.25, 0));
+    for (const sx of [-1, 1]) {
+      out.push(mesh(new THREE.BoxGeometry(3, 2.5, s.d * 0.8), wood, sx * s.w * 0.35, 1.25, 0));
+      out.push(rope([sx * s.w * 0.35, 0, 0], [sx * s.w / 2, s.h, 0], s.color, 1.4));
+    }
+    const L = s.w * 0.78, yEnd = s.h - 4;
+    out.push(hammockBody(L, 38, yEnd, 14, '#e3d6c2'));
+    for (const sx of [-1, 1]) out.push(rope([sx * s.w / 2, s.h, 0], [sx * L / 2, yEnd, 0]));
+    return out;
+  },
+  hangingChair(s, ctx) {
+    const podH = s.h * 0.5, wick = new THREE.MeshLambertMaterial({ color: s.color, side: THREE.DoubleSide });
+    const out = [
+      mesh(new THREE.CylinderGeometry(s.w / 2, s.w * 0.3, podH, 28, 1, true, Math.PI * 0.3, Math.PI * 1.4), wick, 0, podH / 2),
+      mesh(new THREE.CylinderGeometry(s.w * 0.3, s.w * 0.3, 1, 24), wick, 0, 0.5),
+      mesh(new THREE.CylinderGeometry(s.w * 0.36, s.w * 0.33, 3.5, 24), mat('#efe8dc'), 0, 3),
+      mesh(new RoundedBoxGeometry(s.w * 0.45, 12, 5, 3, 2), mat('#c9a66b'), 0, 11, -s.w * 0.3),
+    ];
+    for (let i = 0; i < 4; i++) {
+      const a = Math.PI * 0.55 + i * (Math.PI * 0.9 / 3);
+      out.push(rope([Math.sin(a) * s.w / 2 * 0.95, podH, Math.cos(a) * s.w / 2 * 0.95], [0, s.h, 0]));
+    }
+    const chain = ctx.ceiling - s.z - s.h;
+    if (chain > 0) out.push(rope([0, s.h, 0], [0, s.h + chain, 0], 0x3a3733, 0.3));
+    return out;
+  },
+  armchair(s) {
+    const fab = mat(s.color), dark = mat(shade(s.color, 0.8)), out = [];
+    for (const sx of [-1, 1]) for (const sz of [-1, 1]) out.push(mesh(new THREE.CylinderGeometry(0.8, 0.6, 4, 8), mat('#3a3733'), sx * (s.w / 2 - 3), 2, sz * (s.d / 2 - 3)));
+    out.push(mesh(new RoundedBoxGeometry(s.w, 13, s.d, 3, 2.5), fab, 0, 10.5, 0));
+    const back = mesh(new RoundedBoxGeometry(s.w - 2, s.h - 12, 8, 3, 3), dark, 0, 12 + (s.h - 12) / 2, -s.d / 2 + 4.5);
+    back.rotation.x = -0.12;
+    out.push(back);
+    for (const sx of [-1, 1]) out.push(mesh(new RoundedBoxGeometry(5, 20, s.d - 2, 3, 2), dark, sx * (s.w / 2 - 2.5), 14, 0));
+    return out;
+  },
+  sconce(s) {
+    return [
+      mesh(new THREE.BoxGeometry(4, 6, 0.8), mat('#3a3733'), 0, s.h * 0.55, -s.d / 2 + 0.4),
+      rope([0, s.h * 0.6, -s.d / 2 + 0.8], [0, s.h * 0.75, s.d / 2 - 4], 0x3a3733, 0.35),
+      mesh(new THREE.CylinderGeometry(2.8, 3.8, 6, 20, 1, true), glowMat(s.color, s.glow ?? 0.6), 0, s.h * 0.5, s.d / 2 - 4),
+    ];
+  },
+  ladderShelf(s) {
+    const wood = mat(s.color), out = [];
+    const tilt = -Math.atan2(s.d - 1, s.h), len = Math.hypot(s.d - 1, s.h);
+    for (const sx of [-1, 1]) {
+      const r = mesh(new THREE.BoxGeometry(1.5, len, 1.5), wood, sx * (s.w / 2 - 0.75), s.h / 2, 0.5);
+      r.rotation.x = tilt;
+      out.push(r);
+    }
+    [0.14, 0.4, 0.64, 0.86].forEach((f, i) => {
+      const y = s.h * f, depth = (s.d - 1) * (1 - f) + 2.5;
+      out.push(mesh(new THREE.BoxGeometry(s.w - 3, 0.8, depth), wood, 0, y, -s.d / 2 + depth / 2));
+      if (i % 2 === 0) {
+        out.push(mesh(new THREE.CylinderGeometry(2.2, 1.8, 4, 12), mat('#c98a64'), -s.w / 4, y + 2.4, -s.d / 2 + depth / 2));
+        out.push(mesh(new THREE.IcosahedronGeometry(3, 0), mat('#5b8a52'), -s.w / 4, y + 6.5, -s.d / 2 + depth / 2));
+      } else {
+        const g = new THREE.Group();
+        books(g, s.w * 0.5, y + 0.4, depth - 0.5, -s.d / 2 + 0.3, i * 9);
+        g.position.x = s.w * 0.15;
+        out.push(g);
+      }
+    });
+    return out;
+  },
+});
+
 export function buildItem(item, ctx) {
   const s = spec(item);
   const g = new THREE.Group();

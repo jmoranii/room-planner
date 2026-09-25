@@ -23,5 +23,25 @@
     "id": "two-zones",
     "name": "Idea: two zones, read + meditate",
     "file": "two-zones.json"
+  },
+  {
+    "id": "hammock",
+    "name": "Idea: hammock hideaway",
+    "file": "hammock.json"
+  },
+  {
+    "id": "library",
+    "name": "Idea: reading library",
+    "file": "library.json"
+  },
+  {
+    "id": "plant-sanctuary",
+    "name": "Idea: plant sanctuary",
+    "file": "plant-sanctuary.json"
+  },
+  {
+    "id": "starter",
+    "name": "Idea: simple starter",
+    "file": "starter.json"
   }
 ]

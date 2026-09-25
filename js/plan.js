@@ -120,8 +120,8 @@ export function toPlan(svg, evt) {
   return [q.x, q.y];
 }
 
-const ROUND = new Set(['roundCushion', 'zafu', 'pouf', 'beanbag', 'roundRug', 'roundTable', 'lamp', 'saltLamp', 'lantern', 'basket', 'plant', 'hangingPlant', 'canopy', 'candles', 'sheepskin']);
-const FACING = new Set(['shelf', 'cubes', 'lounger', 'pillow', 'curtain', 'panel', 'frame', 'mirror', 'altar', 'ledge', 'divider']);
+const ROUND = new Set(['hangingChair', 'hammock', 'roundCushion', 'zafu', 'pouf', 'beanbag', 'roundRug', 'roundTable', 'lamp', 'saltLamp', 'lantern', 'basket', 'plant', 'hangingPlant', 'canopy', 'candles', 'sheepskin']);
+const FACING = new Set(['armchair', 'sconce', 'ladderShelf', 'shelf', 'cubes', 'lounger', 'pillow', 'curtain', 'panel', 'frame', 'mirror', 'altar', 'ledge', 'divider']);
 const layer = s => (s.shape === 'rug' || s.shape === 'roundRug' || s.h < 1 ? 0 : OVERHEAD.has(s.shape) ? 2 : 1);
 const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 

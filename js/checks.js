@@ -6,12 +6,21 @@ import { segments, along, pointInRoom } from './geometry.js';
 
 function footprint(it) {
   const s = spec(it);
-  const a = ((it.rot ?? 0) * Math.PI) / 180, c = Math.abs(Math.cos(a)), n = Math.abs(Math.sin(a));
-  const hw = (s.w * c + s.d * n) / 2, hd = (s.w * n + s.d * c) / 2;
-  return { x0: it.x - hw, x1: it.x + hw, y0: it.y - hd, y1: it.y + hd, s };
+  const a = ((it.rot ?? 0) * Math.PI) / 180, c = Math.cos(a), n = Math.sin(a);
+  const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([u, v]) => [it.x + (u * s.w / 2) * c - (v * s.d / 2) * n, it.y + (u * s.w / 2) * n + (v * s.d / 2) * c]);
+  return { pts, axes: [[c, n], [-n, c]], s };
 }
 
-const overlaps = (f, r) => f.x0 < r.x1 && f.x1 > r.x0 && f.y0 < r.y1 && f.y1 > r.y0;
+// Separating-axis test between a turned piece and an axis-aligned zone.
+function overlaps(f, r) {
+  const rect = [[r.x0, r.y0], [r.x1, r.y0], [r.x1, r.y1], [r.x0, r.y1]];
+  for (const [ax, ay] of [[1, 0], [0, 1], ...f.axes]) {
+    const proj = ps => ps.map(([x, y]) => x * ax + y * ay);
+    const a = proj(f.pts), b = proj(rect);
+    if (Math.max(...a) <= Math.min(...b) + 0.01 || Math.max(...b) <= Math.min(...a) + 0.01) return false;
+  }
+  return true;
+}
 
 function containsPoint(it, [px, py]) {
   const s = spec(it);
@@ -45,6 +54,12 @@ export function checkLayout(room, items, options = {}) {
     for (const z of flatPiece ? [] : zones) {
       if (onWall && !z.window) continue;
       if (overlaps(f, z.r) && f.s.z + f.s.h > z.tall) out.push({ id: it.id, text: `${name} ${z.text}` });
+    }
+    if (f.s.shape === 'hammock' && room.post) {
+      const p = room.post, a = ((it.rot ?? 0) * Math.PI) / 180;
+      const ends = [-1, 1].map(k => [it.x + k * Math.cos(a) * f.s.w / 2, it.y + k * Math.sin(a) * f.s.w / 2]);
+      const nearPost = ends.some(([x, y]) => x > p.x0 - 8 && x < p.x1 + 8 && y > p.y0 - 8 && y < p.y1 + 8);
+      if (nearPost) out.push({ id: it.id, text: `${name} hangs from the post. The post holds up the beam, so check what's inside it and that it can take a sideways pull before hanging anything from it.` });
     }
     if (room.closet?.cleanout && f.s.h >= 1 && !hanging && containsPoint(it, room.closet.cleanout)) {
       out.push({ id: it.id, text: `${name} covers the floor drain cover. Fine if it lifts out easily.` });

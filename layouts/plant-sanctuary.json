@@ -1,0 +1,148 @@
+{
+  "id": "plant-sanctuary",
+  "name": "Plant sanctuary",
+  "room": "basement",
+  "notes": "Green and soft, a bit bohemian. A hanging chair on a round rug in the window side, with a ladder shelf of plants on the AC wall, tall plants in the corners and hanging plants along the beam. In the closet side, floor cushions and a pouf around a low table, under a paper lantern, facing a cream macram\u00e9-style hanging on the wall. One thing to check in person: the AC unit blows across the hanging chair.",
+  "mood": "day",
+  "eye": {
+    "x": 130,
+    "y": 104,
+    "yaw": 270,
+    "pitch": 2
+  },
+  "items": [
+    {
+      "id": "rugRound-1",
+      "type": "rugRound",
+      "x": 52,
+      "y": 80,
+      "color": "#d9c7ad",
+      "accent": "#a8876b",
+      "rot": 0
+    },
+    {
+      "id": "hangingChair-1",
+      "type": "hangingChair",
+      "x": 58,
+      "y": 72,
+      "rot": 200
+    },
+    {
+      "id": "ladderShelf-1",
+      "type": "ladderShelf",
+      "x": 8,
+      "y": 110,
+      "rot": 270
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 72,
+      "y": 14,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-2",
+      "type": "plantTall",
+      "x": 78,
+      "y": 158,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-3",
+      "type": "plantTall",
+      "x": 26,
+      "y": 128,
+      "rot": 0
+    },
+    {
+      "id": "plantHanging-1",
+      "type": "plantHanging",
+      "x": 92,
+      "y": 30,
+      "rot": 0
+    },
+    {
+      "id": "plantHanging-2",
+      "type": "plantHanging",
+      "x": 92,
+      "y": 62,
+      "rot": 0
+    },
+    {
+      "id": "plantHanging-3",
+      "type": "plantHanging",
+      "x": 70,
+      "y": 112,
+      "rot": 0
+    },
+    {
+      "id": "floorTable-1",
+      "type": "floorTable",
+      "x": 132,
+      "y": 60,
+      "rot": 0
+    },
+    {
+      "id": "candles-1",
+      "type": "candles",
+      "x": 138,
+      "y": 60,
+      "z": 13,
+      "rot": 0
+    },
+    {
+      "id": "floorCushion-1",
+      "type": "floorCushion",
+      "x": 132,
+      "y": 36,
+      "color": "#7d8b6a",
+      "rot": 0
+    },
+    {
+      "id": "floorCushion-2",
+      "type": "floorCushion",
+      "x": 132,
+      "y": 84,
+      "color": "#c9a66b",
+      "rot": 0
+    },
+    {
+      "id": "pouf-1",
+      "type": "pouf",
+      "x": 112,
+      "y": 60,
+      "color": "#b86b4b",
+      "rot": 0
+    },
+    {
+      "id": "tapestry-1",
+      "type": "tapestry",
+      "x": 132,
+      "y": 0.5,
+      "color": "#e8dcc6",
+      "rot": 0
+    },
+    {
+      "id": "lantern-1",
+      "type": "lantern",
+      "x": 132,
+      "y": 60,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-4",
+      "type": "plantTall",
+      "x": 152,
+      "y": 12,
+      "rot": 0
+    },
+    {
+      "id": "plantSmall-1",
+      "type": "plantSmall",
+      "x": 110,
+      "y": 10,
+      "rot": 0
+    }
+  ]
+}

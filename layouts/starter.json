@@ -1,0 +1,65 @@
+{
+  "id": "starter",
+  "name": "Simple starter",
+  "room": "basement",
+  "notes": "The smallest version: a 4 \u00d7 6 rug, two floor cushions and a zafu, a floor lamp, a basket of blankets and a plant, all in the closet side. Easy to set up in a weekend, and easy to build on once she knows how she actually uses the room.",
+  "mood": "evening",
+  "eye": {
+    "x": 134,
+    "y": 96,
+    "yaw": 270,
+    "pitch": -4
+  },
+  "items": [
+    {
+      "id": "rug46-1",
+      "type": "rug46",
+      "x": 135,
+      "y": 50,
+      "rot": 90
+    },
+    {
+      "id": "floorCushion-1",
+      "type": "floorCushion",
+      "x": 124,
+      "y": 38,
+      "rot": 0
+    },
+    {
+      "id": "floorCushion-2",
+      "type": "floorCushion",
+      "x": 148,
+      "y": 38,
+      "color": "#7d8b6a",
+      "rot": 0
+    },
+    {
+      "id": "zafu-1",
+      "type": "zafu",
+      "x": 135,
+      "y": 68,
+      "rot": 0
+    },
+    {
+      "id": "floorLamp-1",
+      "type": "floorLamp",
+      "x": 104,
+      "y": 12,
+      "rot": 0
+    },
+    {
+      "id": "basket-1",
+      "type": "basket",
+      "x": 152,
+      "y": 72,
+      "rot": 0
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 108,
+      "y": 102,
+      "rot": 0
+    }
+  ]
+}

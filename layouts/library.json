@@ -1,0 +1,132 @@
+{
+  "id": "library",
+  "name": "Reading library",
+  "room": "basement",
+  "notes": "Books on the walls and a proper reading chair. Two tall bookshelves line the wall opposite the window and two more fill the AC wall below the unit, with a reading chair by the window (light over the shoulder), a floor lamp, a side table and an ottoman on a 5 \u00d7 7 rug. The closet side becomes a floor-cushion reading spot with a wall sconce, and a ladder shelf fills the alcove.",
+  "mood": "day",
+  "eye": {
+    "x": 138,
+    "y": 100,
+    "yaw": 205,
+    "pitch": -2
+  },
+  "items": [
+    {
+      "id": "rug57-1",
+      "type": "rug57",
+      "x": 48,
+      "y": 72,
+      "rot": 90,
+      "color": "#8c6e5a",
+      "accent": "#5a4636"
+    },
+    {
+      "id": "tallShelf-1",
+      "type": "tallShelf",
+      "x": 50,
+      "y": 168,
+      "rot": 180
+    },
+    {
+      "id": "tallShelf-2",
+      "type": "tallShelf",
+      "x": 82,
+      "y": 168,
+      "rot": 180
+    },
+    {
+      "id": "tallShelf-3",
+      "type": "tallShelf",
+      "x": 6,
+      "y": 88,
+      "rot": 270
+    },
+    {
+      "id": "tallShelf-4",
+      "type": "tallShelf",
+      "x": 6,
+      "y": 120,
+      "rot": 270
+    },
+    {
+      "id": "armchair-1",
+      "type": "armchair",
+      "x": 60,
+      "y": 44,
+      "color": "#6b7d5a",
+      "rot": 0
+    },
+    {
+      "id": "floorLamp-1",
+      "type": "floorLamp",
+      "x": 84,
+      "y": 26,
+      "rot": 0
+    },
+    {
+      "id": "sideTable-1",
+      "type": "sideTable",
+      "x": 84,
+      "y": 54,
+      "rot": 0
+    },
+    {
+      "id": "pouf-1",
+      "type": "pouf",
+      "x": 60,
+      "y": 80,
+      "color": "#c9a66b",
+      "rot": 0
+    },
+    {
+      "id": "floorCushionLg-1",
+      "type": "floorCushionLg",
+      "x": 125,
+      "y": 40,
+      "color": "#a64d5e",
+      "rot": 0
+    },
+    {
+      "id": "bolster-1",
+      "type": "bolster",
+      "x": 125,
+      "y": 20,
+      "rot": 0
+    },
+    {
+      "id": "sconce-1",
+      "type": "sconce",
+      "x": 125,
+      "y": 4.5,
+      "rot": 0
+    },
+    {
+      "id": "cubeShelf-1",
+      "type": "cubeShelf",
+      "x": 148,
+      "y": 8,
+      "rot": 0
+    },
+    {
+      "id": "roundCushion-1",
+      "type": "roundCushion",
+      "x": 150,
+      "y": 48,
+      "rot": 0
+    },
+    {
+      "id": "ladderShelf-1",
+      "type": "ladderShelf",
+      "x": 115,
+      "y": 140,
+      "rot": 90
+    },
+    {
+      "id": "plantTall-1",
+      "type": "plantTall",
+      "x": 108,
+      "y": 164,
+      "rot": 0
+    }
+  ]
+}

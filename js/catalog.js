@@ -15,6 +15,10 @@ export const CATALOG = {
   beanbag:        { name: 'Bean bag', cat: 'Seating', w: 36, d: 36, h: 28, shape: 'beanbag', color: '#9c7b5f' },
   pouf:           { name: 'Pouf', cat: 'Seating', w: 18, d: 18, h: 16, shape: 'pouf', color: '#d8cbb5' },
   bolster:        { name: 'Bolster pillow', cat: 'Seating', w: 22, d: 8, h: 8, shape: 'bolster', color: '#c7b8a4' },
+  armchair:       { short: 'Reading chair', name: 'Reading chair', cat: 'Seating', w: 32, d: 34, h: 36, shape: 'armchair', color: '#8c6e5a' },
+  hammock:        { name: 'Hammock (hung)', cat: 'Seating', w: 118, d: 40, h: 66, shape: 'hammock', color: '#d9c7ad', note: 'Width is anchor to anchor. Needs about 10 ft, and anchors rated for a sideways pull.' },
+  hammockStand:   { short: 'Hammock + stand', name: 'Hammock with stand', cat: 'Seating', w: 108, d: 44, h: 44, shape: 'hammockStand', color: '#c9a66b' },
+  hangingChair:   { short: 'Hanging chair', name: 'Hanging chair', cat: 'Seating', w: 36, d: 36, h: 44, z: 14, shape: 'hangingChair', color: '#d8cbb5', note: 'Hangs from one ceiling joist.' },
   pillow:         { name: 'Throw pillow', cat: 'Seating', w: 18, d: 6, h: 18, shape: 'pillow', color: '#e0c9a6' },
 
   rug57:          { short: 'Rug 5×7', name: 'Rug 5 x 7 ft', cat: 'Rugs & mats', w: 84, d: 60, h: 0.4, shape: 'rug', color: '#a8876b', accent: '#6b5443' },
@@ -30,11 +34,13 @@ export const CATALOG = {
   lowShelf:       { short: 'Bookshelf', name: 'Low bookshelf', cat: 'Tables & storage', w: 36, d: 12, h: 30, shape: 'shelf', color: '#efe9df' },
   tallShelf:      { short: 'Tall shelf', name: 'Tall bookshelf', cat: 'Tables & storage', w: 30, d: 12, h: 72, shape: 'shelf', color: '#efe9df' },
   cubeShelf:      { short: 'Cube shelf', name: 'Cube shelf 2 x 2', cat: 'Tables & storage', w: 30, d: 15, h: 30, shape: 'cubes', color: '#d9c7ad' },
+  ladderShelf:    { short: 'Ladder shelf', name: 'Ladder shelf', cat: 'Tables & storage', w: 24, d: 16, h: 60, shape: 'ladderShelf', color: '#b08a64' },
   ledge:          { short: 'Ledge', name: 'Picture-ledge shelf', cat: 'Tables & storage', w: 36, d: 4, h: 5, z: 44, shape: 'ledge', color: '#efe9df', mounted: true },
   basket:         { name: 'Blanket basket', cat: 'Tables & storage', w: 16, d: 16, h: 14, shape: 'basket', color: '#b89b72' },
 
   floorLamp:      { name: 'Floor lamp', cat: 'Lighting', w: 14, d: 14, h: 60, shape: 'lamp', color: '#f3e6cc', glow: 1 },
   tableLamp:      { name: 'Table lamp', cat: 'Lighting', w: 10, d: 10, h: 16, shape: 'lamp', color: '#f3e6cc', glow: 0.6, mounted: true },
+  sconce:         { name: 'Plug-in wall sconce', cat: 'Lighting', w: 8, d: 9, h: 10, z: 46, shape: 'sconce', color: '#f3e6cc', glow: 0.6, mounted: true },
   saltLamp:       { name: 'Salt lamp', cat: 'Lighting', w: 6, d: 6, h: 9, shape: 'saltLamp', color: '#e8935a', glow: 0.35, mounted: true },
   lantern:        { short: 'Lantern', name: 'Paper lantern pendant', cat: 'Lighting', w: 20, d: 20, h: 20, z: 56, shape: 'lantern', color: '#f6efe2', glow: 1, mounted: true },
   stringLights:   { short: 'String lights', name: 'String lights (6 ft)', cat: 'Lighting', w: 72, d: 2, h: 2, z: 80, shape: 'string', color: '#ffd9a0', glow: 0.5, mounted: true },
@@ -53,7 +59,7 @@ export const CATALOG = {
 };
 
 // Pieces that hang or mount on a wall show as dashed outlines on the plan.
-export const OVERHEAD = new Set(['lantern', 'string', 'canopy', 'panel', 'frame', 'mirror', 'ledge', 'hangingPlant']);
+export const OVERHEAD = new Set(['lantern', 'string', 'canopy', 'panel', 'frame', 'mirror', 'ledge', 'hangingPlant', 'sconce']);
 
 export const SWATCHES = ['#b86b4b', '#c9a66b', '#7d8b6a', '#8a9a8c', '#3f4a5a', '#6f7f8f', '#9c7b5f', '#d8cbb5', '#efe8dc', '#8c6e5a', '#a64d5e', '#2f2d2a'];
 
